@@ -184,8 +184,6 @@ public class VyTrackSelenuimHW extends TestBase {
 
         for (int i = 1; i <= data.length ; i++) {
            Assert.assertEquals(driver.findElement(By.xpath("(//label[@class='control-label'])["+i+"]")).getText(),data[i-1][0]);
-        }
-        for (int i = 1; i <= data.length ; i++) {
            Assert.assertTrue(driver.findElement(By.xpath("(//div[@class='controls']/div)["+i+"]")).getText().contains(data[i-1][1]));
         }
         extentLogger.info("Verify the given data is displayed:");

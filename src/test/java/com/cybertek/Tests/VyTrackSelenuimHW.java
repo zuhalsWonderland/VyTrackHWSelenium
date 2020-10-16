@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -158,9 +159,7 @@ public class VyTrackSelenuimHW extends TestBase {
         }
         extentLogger.info("Verify that all calendar events were selected");
         extentLogger.pass("Passed");
-
     }
-
     @Test
     public void test6() throws InterruptedException {
         extentLogger = report.createTest("Verify given data");
@@ -181,7 +180,6 @@ public class VyTrackSelenuimHW extends TestBase {
                 {"Recurrence","Weekly every 1 week on Wednesday"},
                 {"Call Via Hangout","No"}
         };
-
         for (int i = 1; i <= data.length ; i++) {
            Assert.assertEquals(driver.findElement(By.xpath("(//label[@class='control-label'])["+i+"]")).getText(),data[i-1][0]);
            Assert.assertTrue(driver.findElement(By.xpath("(//div[@class='controls']/div)["+i+"]")).getText().contains(data[i-1][1]));
@@ -189,5 +187,33 @@ public class VyTrackSelenuimHW extends TestBase {
         extentLogger.info("Verify the given data is displayed:");
         extentLogger.pass("Passed");
 
+    }
+
+    @Ignore
+    @Test //zuhal solution
+    public void test6_3() throws InterruptedException {
+        extentLogger = report.createTest("Veriy that the table data is displayed:");
+        Thread.sleep(3000);
+        extentLogger.info("Click on the Testers Meeting");
+        driver.findElement(By.xpath("//td[.='Testers meeting']")).click();
+        Thread.sleep(3000);
+        String[] tableData ={
+                "Title Testers meeting",
+                "Description This is a a weekly testers meeting",
+                "Start Nov 27, 2019, 9:30 PM",
+                "End Nov 27, 2019, 10:30 PM",
+                "All-Day Event No",
+                "Organizer Stephan Haley",
+                "Guests Tom Smith - Required",
+                "Recurrence Weekly every 1 week on Wednesday",
+                "Call Via Hangout No"
+        };
+        for (int i = 1; i <= tableData.length; i++) {
+            String key = driver.findElement(By.xpath("(//label[@class='control-label'])[" + i + "]")).getText();
+            String value = driver.findElement(By.xpath("(//div[@class='controls']/div)[" + i + "]")).getText();
+            extentLogger.info("Verifying if each of the data in the table is equal to the data we get from the website");
+            Assert.assertEquals(key + " " + value, tableData[i-1]);
+        }
+        extentLogger.pass("Test passed");
     }
 }

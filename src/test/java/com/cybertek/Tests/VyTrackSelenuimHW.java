@@ -216,4 +216,31 @@ public class VyTrackSelenuimHW extends TestBase {
         }
         extentLogger.pass("Test passed");
     }
+    @DataProvider
+    public Object[][] testData() {
+        String[][] data = {
+                {"Title","Testers meeting","(//label[@class='control-label'])[1]","(//div[@class='controls']/div)[1]"},
+                {"Description","This is a a weekly testers meeting","(//label[@class='control-label'])[2]","(//div[@class='controls']/div)[2]"},
+                {"Start","Nov 27, 2019, 9:30","(//label[@class='control-label'])[3]","(//div[@class='controls']/div)[3]"},
+                {"End","Nov 27, 2019, 10:30","(//label[@class='control-label'])[4]","(//div[@class='controls']/div)[4]"},
+                {"All-Day Event","No","(//label[@class='control-label'])[5]","(//div[@class='controls']/div)[5]"},
+                {"Organizer","Stephan Haley","(//label[@class='control-label'])[6]","(//div[@class='controls']/div)[6]"},
+                {"Guests","Tom Smith","(//label[@class='control-label'])[7]","(//div[@class='controls']/div)[7]"},
+                {"Recurrence","Weekly every 1 week on Wednesday","(//label[@class='control-label'])[8]","(//div[@class='controls']/div)[8]"},
+                {"Call Via Hangout","No","(//label[@class='control-label'])[9]","(//div[@class='controls']/div)[9]"}
+        };
+        return data;
+    }
+    @Ignore
+    @Test(dataProvider = "testData")
+    public void test6_5(String firstColumn, String secondColumn, String path1, String path2) throws InterruptedException {
+        extentLogger = report.createTest("Verify that the table data is displayed:");
+        Thread.sleep(3000);
+        extentLogger.info("Click on the Testers Meeting");
+        driver.findElement(By.xpath("//td[.='Testers meeting']")).click();
+        Thread.sleep(3000);
+        Assert.assertEquals(driver.findElement(By.xpath(path1)).getText(),firstColumn);
+        Assert.assertEquals(driver.findElement(By.xpath(path2)).getText(),secondColumn);
+    }
+
 }
